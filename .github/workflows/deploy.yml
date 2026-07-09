@@ -1,0 +1,72 @@
+name: Deploy Portfolio Demo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}   # lets you also trigger it manually from the Actions tab
+
+# Required so GitHub can issue the OIDC token to AWS
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  # Set this to the value from `terraform output github_actions_role_arn`
+  AWS_ROLE_ARN: arn:aws:iam::REPLACE_ME_ACCOUNT_ID:role/aws-cicd-portfolio-demo-github-deploy
+  TF_WORKING_DIR: terraform
+
+jobs:
+  deploy:
+    name: Terraform + Deploy Site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # ── Authenticate to AWS with NO stored credentials ──
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform apply -auto-approve tfplan
+
+      # ── The fast, dramatic part of the live demo ──
+      - name: Get Terraform outputs
+        id: tf_outputs
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: |
+          echo "bucket=$(terraform output -raw s3_bucket_name)" >> "$GITHUB_OUTPUT"
+          echo "distribution_id=$(terraform output -raw cloudfront_distribution_id)" >> "$GITHUB_OUTPUT"
+          echo "url=$(terraform output -raw cloudfront_url)" >> "$GITHUB_OUTPUT"
+
+      - name: Sync site to S3
+        run: |
+          aws s3 sync ./site s3://${{ steps.tf_outputs.outputs.bucket }} --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.tf_outputs.outputs.distribution_id }} \
+            --paths "/*"
+
+      - name: Print live URL
+        run: echo "✅ Live at ${{ steps.tf_outputs.outputs.url }}"

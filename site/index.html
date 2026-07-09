@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthony Delos Santos — Senior Network &amp; Cloud Infrastructure Engineer</title>
+
+  <!-- Fonts (Barlow + Open Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       ┌─────────────────────────────────────────────────────────┐
+       │  CI/CD DEMO — CHANGE THESE TWO LINES TO SHIP "v2"        │
+       │  This is the ONE edit you make live in front of the room │
+       └─────────────────────────────────────────────────────────┘
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --deploy-version: "v1.0";   /* ←①  change to  "v2.0"   */
+      --deploy-accent:  #0066FE;  /* ←②  change to  #22c55e  (green) */
+    }
+    /* ═══════════════════════════════════════════════════════════
+       (Nothing else below needs to change for the demo.)
+    ═══════════════════════════════════════════════════════════ */
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 78% 8%, rgba(0,102,254,0.18) 0%, rgba(0,102,254,0) 60%),
+        radial-gradient(900px 500px at 12% 100%, rgba(0,102,254,0.10) 0%, rgba(0,102,254,0) 55%),
+        linear-gradient(160deg, #0a1330 0%, #070d20 55%, #050912 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* ── Deployment banner: the live "scoreboard" for the demo ── */
+    .deploy-banner {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 16px;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--deploy-accent);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+      transition: background 0.4s ease;
+    }
+    .deploy-banner .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
+      animation: deploy-pulse 1.8s ease-out infinite;
+    }
+    @keyframes deploy-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+      70%  { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+    }
+    .deploy-banner .label::after {
+      content: "Deployed via CI/CD pipeline  •  Build " var(--deploy-version);
+    }
+    .deploy-banner .badge {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .deploy-banner .badge::after { content: var(--deploy-version); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .deploy-banner .dot { animation: none; }
+    }
+
+/* ═══════════════════════════════════════════════════════════
+   HERO STYLES (unchanged — your Elementor hero, verbatim)
+═══════════════════════════════════════════════════════════ */
+
+.hw4 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.hw4 {
+  width: 100%;
+  max-width: 1536px;
+  margin: 0 auto;
+  padding: 52px 40px 0 52px;
+  font-family: 'Open Sans', Arial, sans-serif;
+  color: #fff;
+  position: relative;
+  min-height: 700px;
+  overflow-x: hidden;
+}
+
+.hw4 [data-anim] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.hw4 [data-anim="rise"] {
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hw4 [data-anim="line"] {
+  transform: translateY(100%);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hw4 [data-anim="right"] {
+  transform: translateX(40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hw4 [data-anim="photo"] {
+  transform: translateX(-50%) scale(0.99);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hw4 .is-in[data-anim="photo"] {
+  transform: translateX(-50%);
+}
+
+.hw4 .is-in[data-anim] {
+  opacity: 1;
+  transform: none;
+}
+
+.hw4 [data-anim] { transition-delay: var(--d, 0s); }
+
+.hw4-line-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.hw4-glow {
+  position: absolute;
+  bottom: 4%;
+  left: 4%;
+  width: 60%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,102,254,0.24) 0%, rgba(0,102,254,0) 65%);
+  filter: blur(20px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 1.2s ease 0.6s;
+}
+.hw4-glow.is-in { opacity: 0.4; }
+
+@keyframes hw4-shimmer {
+  0%   { background-position: -120% 0; }
+  100% { background-position: 220% 0; }
+}
+.hw4-h1 .bl {
+  color: #2a7fff;
+  background: linear-gradient(100deg, #2a7fff 0%, #7db4ff 45%, #2a7fff 60%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hw4-h1.is-in .bl {
+  animation: hw4-shimmer 4.5s ease-in-out 1.4s infinite;
+}
+
+.hw4-grid {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 0;
+  align-items: stretch;
+  min-height: 640px;
+}
+
+.hw4-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 4px;
+  padding-right: 36px;
+  padding-bottom: 36px;
+  z-index: 2;
+}
+
+.hw4-eyebrow {
+  display: inline-block;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #5a9eff;
+  border: 1px solid rgba(42,127,255,0.45);
+  padding: 7px 16px;
+  border-radius: 4px;
+  margin-bottom: 22px;
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes hw4-eyebrow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(42,127,255,0.0);
+    border-color: rgba(42,127,255,0.45);
+    color: #5a9eff;
+  }
+  50% {
+    box-shadow: 0 0 18px 2px rgba(42,127,255,0.45);
+    border-color: rgba(90,158,255,0.95);
+    color: #9cc4ff;
+  }
+}
+.hw4-eyebrow.is-in {
+  animation: hw4-eyebrow-pulse 2.6s ease-in-out 1.6s infinite;
+}
+
+.hw4-eyebrow::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(156,196,255,0.35), transparent);
+  transform: skewX(-18deg);
+}
+.hw4-eyebrow.is-in::after {
+  animation: hw4-eyebrow-sweep 2.6s ease-in-out 1.6s infinite;
+}
+@keyframes hw4-eyebrow-sweep {
+  0%   { left: -120%; }
+  55%  { left: 160%; }
+  100% { left: 160%; }
+}
+
+.hw4-h1 {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.18;
+  letter-spacing: 0;
+  color: #fff;
+  margin-bottom: 22px;
+}
+
+.hw4-body {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #ffffff;
+  margin-bottom: 32px;
+}
+
+.hw4-body .aws   { color: #FF9900; font-weight: 600; }
+.hw4-body .azure { color: #0089D6; font-weight: 600; }
+.hw4-body .gcp   { color: #34A853; font-weight: 600; }
+.hw4-body .hyb   { color: #0066FE; font-weight: 600; }
+
+.hw4-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.hw4-bp {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #0066FE; color: #fff;
+  font-family: 'Open Sans', sans-serif; font-weight: 600; font-size: 14.5px;
+  padding: 12px 22px; border-radius: 6px; text-decoration: none; white-space: nowrap;
+  border: 2px solid #0066FE;
+  transition: background 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.hw4-bp:hover {
+  background: #0052cc; border-color: #0052cc;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,102,254,0.4);
+}
+.hw4-bp::before {
+  content:''; position:absolute; top:0; left:-75%;
+  width:50%; height:100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+}
+.hw4-bp:hover::before { animation: hw4-shine 0.8s ease 1; }
+@keyframes hw4-shine { 0%{left:-75%;} 100%{left:130%;} }
+
+.hw4-bp svg { transition: transform 0.25s ease; }
+.hw4-bp:hover svg { transform: translateX(4px); }
+
+.hw4-bo {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: #fff;
+  font-family: 'Open Sans', sans-serif; font-weight: 600; font-size: 14.5px;
+  padding: 11px 18px; border-radius: 6px;
+  border: 1.5px solid rgba(255,255,255,0.35); text-decoration: none; white-space: nowrap;
+  transition: border-color 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.2s;
+}
+.hw4-bo:hover {
+  border-color: rgba(255,255,255,0.8);
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.04);
+}
+.hw4-bp svg, .hw4-bo svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.hw4-stats {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+}
+.hw4-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding-right: 18px;
+  border-right: 1px solid rgba(255,255,255,0.14);
+}
+.hw4-stat:last-child { border-right: none; padding-right: 0; }
+.hw4-stat:not(:first-child) { padding-left: 18px; }
+.hw4-stat-top {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 4px;
+}
+.hw4-stat-top svg {
+  width: 26px; height: 26px; flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.hw4-stat:hover .hw4-stat-top svg { transform: scale(1.15) rotate(-4deg); }
+.hw4-stat-num {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800; font-size: 30px;
+  color: #0066FE; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hw4-stat-lbl {
+  font-size: 15px; color: #e3e9f2; line-height: 1.4;
+  text-align: center;
+}
+
+.hw4-right {
+  position: relative;
+  height: 100%;
+  min-height: 640px;
+  overflow: visible;
+  z-index: 1;
+}
+.hw4-person {
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  right: auto;
+  transform: translateX(-50%);
+  max-height: 100%;
+  max-width: 70%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  z-index: 1;
+  background: transparent;
+}
+
+.hw4-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 38%;
+  z-index: 3;
+  background: rgba(10, 18, 40, 0.55);
+  border: 1px solid rgba(120,150,200,0.28);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hw4-ci {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.hw4-ci:last-child { border-bottom: none; }
+.hw4-ci:hover {
+  background: rgba(0,102,254,0.07);
+  transform: translateX(4px);
+}
+.hw4-ci-ico { width: 46px; height: 46px; flex-shrink: 0; margin-top: 2px; }
+.hw4-ci-ico svg { width: 46px; height: 46px; transition: transform 0.3s ease; }
+.hw4-ci:hover .hw4-ci-ico svg { transform: scale(1.1); }
+.hw4-ci-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700; font-size: 20px; color: #fff;
+  margin-bottom: 8px; line-height: 1.2;
+}
+.hw4-ci-desc {
+  font-size: 16px; color: #aeb9cb; line-height: 1.55;
+}
+
+.hw4-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 4px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 2px solid rgba(255,255,255,0.16);
+  position: relative; z-index: 2;
+  flex-wrap: nowrap;
+  gap: 20px;
+  margin-top: 8px;
+}
+.hw4-logos-lbl {
+  font-size: 14px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: #ffffff;
+  white-space: nowrap; margin-right: 16px; flex-shrink: 0;
+}
+.hw4-logos-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 28px; flex: 1; flex-wrap: nowrap;
+}
+.hw4-li {
+  display: flex; align-items: center; gap: 9px;
+  opacity: 1;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease;
+}
+.hw4-li:hover {
+  transform: translateY(-4px) scale(1.06);
+  filter: drop-shadow(0 6px 14px rgba(0,102,254,0.35));
+}
+.hw4-lw { font-family: 'Barlow', sans-serif; font-weight: 700; }
+
+.hw4-play {
+  --px: 4%;
+  --py: 40%;
+  position: absolute;
+  left: var(--px);
+  bottom: var(--py);
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.9s, transform 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hw4-play.is-in { opacity: 1; }
+.hw4-play:hover { transform: translateX(-50%) translateY(-2px); }
+
+.hw4-play-btn {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.30);
+  border: 2px solid rgba(255, 180, 180, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.30);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.hw4-play:hover .hw4-play-btn {
+  background: rgba(239, 30, 30, 0.55);
+  border-color: rgba(255,255,255,0.9);
+  box-shadow: 0 6px 28px rgba(239, 30, 30, 0.5);
+}
+
+.hw4-play-btn svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 4px;
+  fill: rgba(255,255,255,0.96);
+  transition: fill 0.25s ease;
+}
+
+.hw4-play-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 110, 110, 0.7);
+  opacity: 0;
+}
+.hw4-play.is-in .hw4-play-btn::before {
+  animation: hw4-play-pulse 2.6s ease-out 1.4s infinite;
+}
+.hw4-play-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 110, 110, 0.5);
+  opacity: 0;
+}
+.hw4-play.is-in .hw4-play-btn::after {
+  animation: hw4-play-pulse 2.6s ease-out 2.7s infinite;
+}
+@keyframes hw4-play-pulse {
+  0%   { transform: scale(1);    opacity: 0.75; }
+  70%  { transform: scale(2.6);  opacity: 0; }
+  100% { transform: scale(2.6);  opacity: 0; }
+}
+
+.hw4-play-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: rgba(245, 248, 255, 0.96);
+  white-space: nowrap;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.75);
+}
+
+.hw4-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.hw4-modal.is-open { display: flex; }
+
+.hw4-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 20, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: hw4-fade-in 0.3s ease;
+}
+@keyframes hw4-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.hw4-modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  z-index: 1;
+  animation: hw4-modal-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes hw4-modal-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hw4-modal-video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(120,150,200,0.28);
+}
+.hw4-modal-video iframe,
+.hw4-modal-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.hw4-modal-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0066FE;
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.hw4-modal-close:hover { transform: rotate(90deg) scale(1.05); background: #0052cc; }
+
+@media (max-width: 560px) {
+  .hw4-modal-close { top: 8px; right: 8px; }
+  .hw4-play-btn { width: 56px; height: 56px; }
+  .hw4-play-btn svg { width: 20px; height: 20px; }
+  .hw4-play-label { font-size: 12px; }
+}
+
+@media (max-width: 1100px) {
+  .hw4-h1 { font-size: 38px; }
+  .hw4 { padding: 44px 32px 0 40px; }
+  .hw4-panel { width: 42%; }
+  .hw4-grid { grid-template-columns: 40% 60% !important; }
+}
+@media (max-width: 900px) {
+  .hw4-grid { grid-template-columns: 1fr; min-height: auto; }
+  .hw4-right { order: -1; min-height: 360px; }
+  .hw4-person { position: relative; top: auto; left: auto; width: 55%; height: auto; max-width: 260px; margin: 0 auto; display: block; transform: none; }
+  .hw4 [data-anim="photo"] { transform: scale(0.99); }
+  .hw4 .is-in[data-anim="photo"] { transform: none; }
+  .hw4-glow { left: 50%; width: 70%; transform: translateX(-50%); }
+  .hw4-panel { position: relative; top: auto; right: auto; width: 100%; margin-top: 16px; border-radius: 10px; }
+  .hw4-left { padding-right: 0; }
+  .hw4 { padding: 36px 24px 0; min-height: auto; }
+  .hw4-h1 { font-size: 30px; }
+}
+
+@media (min-width: 1025px) {
+  .hw4-grid { grid-template-columns: 40% 60% !important; }
+  .hw4-right { order: 0 !important; }
+  .hw4-person { position: absolute !important; top: auto !important; left: 35% !important; width: auto !important; height: auto !important; max-width: 70% !important; margin: 0 !important; display: block !important; transform: translateX(-50%) !important; }
+}
+@media (max-width: 580px) {
+  .hw4-h1 { font-size: 26px; }
+  .hw4-btns { flex-direction: column; align-items: flex-start; }
+  .hw4-stats { flex-wrap: wrap; gap: 16px; }
+  .hw4-stat { flex: 1 1 40%; border-right: none; padding: 0 !important; }
+  .hw4-logos-row { gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .hw4-logos { flex-wrap: wrap; justify-content: center; }
+  .hw4-logos-lbl { width: 100%; text-align: center; margin-right: 0; margin-bottom: 8px; }
+  .hw4 { padding: 24px 16px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hw4 [data-anim],
+  .hw4 .is-in[data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hw4 .is-in[data-anim="photo"] { transform: translateX(-50%) !important; }
+  .hw4-glow.is-in,
+  .hw4-play.is-in .hw4-play-btn::before,
+  .hw4-play.is-in .hw4-play-btn::after,
+  .hw4-h1.is-in .bl,
+  .hw4-eyebrow.is-in,
+  .hw4-eyebrow.is-in::after { animation: none !important; }
+  .hw4-play { opacity: 1 !important; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ══ DEPLOYMENT BANNER — your live before/after scoreboard ══ -->
+  <div class="deploy-banner">
+    <span class="dot"></span>
+    <span class="label"></span>
+    <span class="badge"></span>
+  </div>
+
+  <div class="hw4" id="hw4Root">
+
+    <div class="hw4-grid">
+
+      <!-- LEFT: ALL TEXT CONTENT -->
+      <div class="hw4-left">
+
+        <span class="hw4-eyebrow" data-anim="rise" style="--d:.05s">Senior Network &amp; Cloud Infrastructure Engineer</span>
+
+        <h1 class="hw4-h1" id="hw4H1">
+          <span class="hw4-line-mask"><span data-anim="line" style="--d:.20s">Building Secure</span></span>
+          <span class="hw4-line-mask"><span data-anim="line" style="--d:.30s">Enterprise Networks &amp;</span></span>
+          <span class="hw4-line-mask"><span data-anim="line" style="--d:.40s" class="bl">Hybrid Multi-Cloud</span></span>
+          <span class="hw4-line-mask"><span data-anim="line" style="--d:.50s">Infrastructure at Scale</span></span>
+        </h1>
+
+        <p class="hw4-body" data-anim="rise" style="--d:.62s">
+          I help organizations design, deploy, secure, automate, and optimize
+          enterprise network infrastructures, security platforms, data center
+          environments, and cloud solutions across
+          <span class="aws">AWS</span>,
+          <span class="azure">Azure</span>,
+          <span class="gcp">Google Cloud</span>,
+          and <span class="hyb">hybrid</span> environments.
+        </p>
+
+        <div class="hw4-btns">
+          <a class="hw4-bp" href="#projects" data-anim="rise" style="--d:.74s">
+            View My Projects
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="hw4-bo" href="#explore-my-multi" data-anim="rise" style="--d:.82s">
+            Explore Demos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="hw4-bo" href="#Contact" data-anim="rise" style="--d:.90s">
+            Contact Me
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </a>
+        </div>
+
+        <div class="hw4-stats">
+          <div class="hw4-stat" data-anim="rise" style="--d:1.00s">
+            <div class="hw4-stat-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+              <span class="hw4-stat-num" data-count="27" data-suffix="+">0+</span>
+            </div>
+            <span class="hw4-stat-lbl">Cloud Projects<br></span>
+          </div>
+          <div class="hw4-stat" data-anim="rise" style="--d:1.08s">
+            <div class="hw4-stat-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-4 9-8 10C8 21 4 17 4 12V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span class="hw4-stat-num" data-count="99.9" data-suffix="%" data-decimals="1">0%</span>
+            </div>
+            <span class="hw4-stat-lbl">Infrastructure<br>Availability</span>
+          </div>
+          <div class="hw4-stat" data-anim="rise" style="--d:1.16s">
+            <div class="hw4-stat-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
+              <span class="hw4-stat-num" data-count="17" data-suffix="+">0+</span>
+            </div>
+            <span class="hw4-stat-lbl">Years<br>Experience</span>
+          </div>
+          <div class="hw4-stat" data-anim="rise" style="--d:1.24s">
+            <div class="hw4-stat-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M9 14l-5 7 4-1 2 3 4-6M15 14l5 7-4-1-2 3-4-6"/></svg>
+              <span class="hw4-stat-num" data-count="12" data-suffix="+">0+</span>
+            </div>
+            <span class="hw4-stat-lbl">Professional<br>Certifications</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: PERSON + UNIFIED CARD PANEL -->
+      <div class="hw4-right">
+
+        <div class="hw4-glow" data-glow></div>
+
+        <img class="hw4-person"
+             data-anim="photo" style="--d:.35s"
+             src="https://anthonydls.com/wp-content/uploads/2026/06/older_version-removebg-preview.png"
+             alt="Anthony Delos Santos"
+             width="440"
+             height="661"
+             fetchpriority="high"
+             decoding="async" />
+
+        <button class="hw4-play" id="hw4PlayBtn" data-play aria-label="Play intro video"
+                style="--px:14%; --py:40%;">
+          <span class="hw4-play-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,4 20,12 6,20"/></svg>
+          </span>
+          <span class="hw4-play-label">Play to know<br>about me</span>
+        </button>
+
+        <div class="hw4-panel" data-anim="right" style="--d:.55s">
+
+          <div class="hw4-ci">
+            <div class="hw4-ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="4" r="2.2"/><circle cx="4.5" cy="19.5" r="2.2"/><circle cx="19.5" cy="19.5" r="2.2"/>
+                <path d="M12 6.2v5.5M12 11.7l-6 6.6M12 11.7l6 6.6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="hw4-ci-title">Enterprise Networking</div>
+              <div class="hw4-ci-desc">Designing and deploying enterprise, Network LAN, WAN, Wireless and data center networks</div>
+            </div>
+          </div>
+
+          <div class="hw4-ci">
+            <div class="hw4-ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l8.5 4.2v5.9c0 5.5-3.7 10.2-8.5 11.4C7.2 22.3 3.5 17.6 3.5 12.1V6.2L12 2z"/>
+                <circle cx="12" cy="11.5" r="2.2" fill="#0066FE" stroke="none"/><path d="M12 13.7v2.2"/>
+              </svg>
+            </div>
+            <div>
+              <div class="hw4-ci-title">Network Security</div>
+              <div class="hw4-ci-desc">Implementing secure firewalls, VPNs, NAC, and Proxy, ISE  & load balancer</div>
+            </div>
+          </div>
+
+          <div class="hw4-ci">
+            <div class="hw4-ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.5 10a6.5 6.5 0 10-12.9 1.2A4.5 4.5 0 005.5 19.5h13a3.5 3.5 0 000-7h-.2A6.5 6.5 0 0018.5 10z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="hw4-ci-title">Cloud Infrastructure</div>
+              <div class="hw4-ci-desc">Building scalable AWS, Azure, Google Cloud, and hybrid cloud environments</div>
+            </div>
+          </div>
+
+          <div class="hw4-ci">
+            <div class="hw4-ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066FE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="hw4-ci-title">Infrastructure Automation</div>
+              <div class="hw4-ci-desc">Automating deployments and operations using Terraform, Ansible, and IaC</div>
+            </div>
+          </div>
+
+        </div><!-- /panel -->
+      </div><!-- /right -->
+
+    </div><!-- /grid -->
+
+    <!-- LOGOS BAR -->
+    <div class="hw4-logos" data-anim="rise" style="--d:1.35s">
+      <span class="hw4-logos-lbl">Technologies &amp; Platforms</span>
+      <div class="hw4-logos-row">
+        <div class="hw4-li">
+          <svg height="40" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg">
+            <text y="26" font-family="Arial Black,sans-serif" font-weight="900" font-size="30" fill="#FF9900">aws</text>
+          </svg>
+        </div>
+        <div class="hw4-li">
+          <svg height="32" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 1.5L2 16.5h3.5l1.5-4h5l-5-6 1-5z" fill="#0089D6"/>
+            <path d="M10.5 6l4 10.5H7l3.5-4H9l1.5-6.5z" fill="#0089D6" opacity=".6"/>
+          </svg>
+          <div style="line-height:1.1;">
+            <div style="font-family:'Open Sans',sans-serif;font-size:14px;color:#ccc;">Microsoft</div>
+            <div style="font-family:'Barlow',sans-serif;font-size:22px;color:#fff;font-weight:700;line-height:1;">Azure</div>
+          </div>
+        </div>
+        <div class="hw4-li">
+          <svg height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 6.5A5.5 5.5 0 0117.5 12H19a7 7 0 10-7 7v-1.5A5.5 5.5 0 0112 6.5z" fill="#4285F4"/>
+            <path d="M19 12h-1.5A5.5 5.5 0 0112 17.5V19a7 7 0 007-7z" fill="#34A853"/>
+            <path d="M6.5 12A5.5 5.5 0 0112 6.5V5a7 7 0 00-7 7h1.5z" fill="#EA4335"/>
+            <path d="M12 17.5A5.5 5.5 0 016.5 12H5a7 7 0 007 7v-1.5z" fill="#FBBC05"/>
+          </svg>
+          <span class="hw4-lw" style="font-size:21px;color:#ddd;">Google <span style="color:#fff;">Cloud</span></span>
+        </div>
+        <div class="hw4-li">
+          <svg height="30" viewBox="0 0 50 22" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0"  y="7"  width="6" height="8"  rx="3" fill="#049fd9"/>
+            <rect x="8"  y="4"  width="6" height="14" rx="3" fill="#049fd9"/>
+            <rect x="16" y="0"  width="6" height="22" rx="3" fill="#049fd9"/>
+            <rect x="24" y="4"  width="6" height="14" rx="3" fill="#049fd9"/>
+            <rect x="32" y="7"  width="6" height="8"  rx="3" fill="#049fd9"/>
+          </svg>
+          <span class="hw4-lw" style="font-size:22px;color:#049fd9;letter-spacing:2px;">cisco</span>
+        </div>
+        <div class="hw4-li">
+          <span class="hw4-lw" style="font-size:23px;"><span style="color:#a4b8cc;">vm</span><span style="color:#fff;">ware</span></span>
+        </div>
+        <div class="hw4-li">
+          <svg height="32" viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 4l6 3.5v7L8 11V4z" fill="#7B42BC"/>
+            <path d="M15 7.5l4 2.3v7L15 14.5v-7z" fill="#7B42BC" opacity=".7"/>
+            <path d="M1 4l6 3.5v7L1 11V4z" fill="#7B42BC" opacity=".5"/>
+            <path d="M8 15l6 3.5v2L8 17v-2z" fill="#7B42BC"/>
+          </svg>
+          <span class="hw4-lw" style="font-size:21px;color:#fff;">Terraform</span>
+        </div>
+        <div class="hw4-li">
+          <svg height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="11" fill="none" stroke="#fff" stroke-width="1.8"/>
+            <text x="12" y="17" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="13" fill="#EE0000">A</text>
+          </svg>
+          <span class="hw4-lw" style="font-size:21px;color:#fff;letter-spacing:3px;">ANSIBLE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VIDEO POPUP MODAL ═══ -->
+    <div class="hw4-modal" id="hw4Modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="hw4-modal-backdrop" data-close></div>
+      <div class="hw4-modal-box">
+        <button class="hw4-modal-close" data-close aria-label="Close video">&times;</button>
+        <div class="hw4-modal-video">
+          <video id="hw4Video" controls playsinline preload="none">
+            <source src="https://anthonydls.com/wp-content/uploads/2026/06/NewAboutMe.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /hw4 -->
+
+  <script>
+  (function () {
+    var root = document.getElementById('hw4Root');
+    if (!root) return;
+
+    var reduce = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function runCount(el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      var dur = 1400;
+      var start = null;
+
+      function frame(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var val = (target * eased).toFixed(decimals);
+        el.textContent = val + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function reveal() {
+      root.querySelectorAll('[data-anim]').forEach(function (el) {
+        el.classList.add('is-in');
+      });
+      var photo = root.querySelector('.hw4-person');
+      if (photo) photo.classList.add('is-in');
+      var glow = root.querySelector('[data-glow]');
+      if (glow) glow.classList.add('is-in');
+      var play = root.querySelector('.hw4-play');
+      if (play) play.classList.add('is-in');
+      var h1 = document.getElementById('hw4H1');
+      if (h1) h1.classList.add('is-in');
+      var eb = root.querySelector('.hw4-eyebrow');
+      if (eb) eb.classList.add('is-in');
+
+      var nums = root.querySelectorAll('[data-count]');
+      if (reduce) {
+        nums.forEach(function (el) {
+          var d = parseInt(el.getAttribute('data-decimals') || '0', 10);
+          el.textContent = parseFloat(el.getAttribute('data-count')).toFixed(d) +
+            (el.getAttribute('data-suffix') || '');
+        });
+      } else {
+        setTimeout(function () {
+          nums.forEach(runCount);
+        }, 1000);
+      }
+    }
+
+    if (reduce) { reveal(); return; }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            reveal();
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+      io.observe(root);
+    } else {
+      reveal();
+    }
+
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        if (!root.querySelector('.hw4-eyebrow.is-in')) reveal();
+      }, 400);
+    });
+
+    function hw4KillVideo(v) {
+      if (!v) return;
+      try {
+        v.pause();
+        v.currentTime = 0;
+        v.muted = true;
+        v.load();
+      } catch (e) {}
+    }
+
+    function hw4StopAllVideos() {
+      document.querySelectorAll('.hw4-modal video').forEach(hw4KillVideo);
+    }
+
+    function hw4CloseAll() {
+      document.querySelectorAll('.hw4-modal.is-open').forEach(function (m) {
+        m.classList.remove('is-open');
+        m.setAttribute('aria-hidden', 'true');
+      });
+      document.body.style.overflow = '';
+      hw4StopAllVideos();
+    }
+
+    function hw4OpenModal(modal) {
+      if (!modal) return;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var v = modal.querySelector('video');
+      if (v) {
+        v.muted = false;
+        try { v.load(); } catch (e) {}
+        v.currentTime = 0;
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    }
+
+    if (!window.__hw4VideoWired) {
+      window.__hw4VideoWired = true;
+
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.closest) return;
+
+        var playEl = t.closest('[data-play]');
+        if (playEl) {
+          var host = playEl.closest('.hw4');
+          var modal = host ? host.querySelector('.hw4-modal') : document.querySelector('.hw4-modal');
+          hw4OpenModal(modal);
+          return;
+        }
+
+        if (t.closest('.hw4-modal [data-close]')) {
+          hw4CloseAll();
+        }
+      }, true);
+
+      document.addEventListener('keydown', function (e) {
+        if ((e.key === 'Escape' || e.keyCode === 27) &&
+            document.querySelector('.hw4-modal.is-open')) {
+          hw4CloseAll();
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
