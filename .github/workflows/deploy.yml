@@ -13,7 +13,7 @@ permissions:
 env:
   AWS_REGION: us-east-1
   # Set this to the value from `terraform output github_actions_role_arn`
-  AWS_ROLE_ARN: arn:aws:iam::REPLACE_ME_ACCOUNT_ID:role/aws-cicd-portfolio-demo-github-deploy
+  AWS_ROLE_ARN: arn:aws:iam::389656351792:role/aws-cicd-portfolio-demo-github-deploy
   TF_WORKING_DIR: terraform
 
 jobs:
